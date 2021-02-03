@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.colorchooser import askcolor
 
-from db import Database
+from Components.db import Database
 from Operations.operation import Operation
 
 class Patern(Operation):

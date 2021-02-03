@@ -2,8 +2,8 @@ import re
 import tkinter as tk
 from tkinter import ttk
 
-from db import Database
-from pop_up_menu import PopUpMenu
+from Components.db import Database
+from Components.pop_up_menu import PopUpMenu
 
 class TextScrollCombo(ttk.Frame):
 

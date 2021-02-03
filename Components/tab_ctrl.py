@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from text import TextScrollCombo
+from Components.text import TextScrollCombo
 
 class CustomNotebook(ttk.Notebook):
     """
@@ -101,7 +101,7 @@ class TabCtrl(object):
     def __init__(self, root):
        self.root = root
        self.nb = CustomNotebook(root)
-       self.add_tab()
+       #self.add_tab()
 
     def add_tab(self):
         tab = ttk.Frame(self.nb)
@@ -130,9 +130,12 @@ class TabCtrl(object):
             self.nb.tab(tab_num, text = name)
 
     def close_corrent_tab(self):
-        tab_num = self.nb.index('current')
-        if tab_num != None:
-            self.nb.forget(tab_num)
-            del self.nb.tabs[tab_num]
+        try:
+            tab_num = self.nb.index('current')
+            if tab_num != None:
+                self.nb.forget(tab_num)
+                del self.nb.tabs[tab_num]
+        except:
+            pass
 
 
