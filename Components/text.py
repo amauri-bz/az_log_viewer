@@ -5,10 +5,10 @@ from tkinter import ttk
 from Components.db import Database
 from Components.pop_up_menu import PopUpMenu
 
-class TextScrollCombo(ttk.Frame):
+class TextScrollCombo(tk.Frame):
 
     def __init__(self, root, tab):
-        super().__init__(root)
+        super().__init__(root, bg='#e6e6e6')
         self.root = root
         self.tab = tab
         # ensure a consistent GUI size

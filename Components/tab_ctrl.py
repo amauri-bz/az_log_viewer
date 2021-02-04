@@ -44,9 +44,13 @@ class CustomNotebook(ttk.Notebook):
         index = self.index("@%d,%d" % (event.x, event.y))
 
         if "close" in element and self._active == index:
-            self.forget(index)
+            for item in self.tabs[index].winfo_children():
+                item.destroy()
             del self.tabs[index]
-            self.event_generate("<<NotebookTabClosed>>")
+            self.forget(index)
+
+            if len(self.tabs) <=0:
+                self.pack_forget()
 
         self.state(["!pressed"])
         self._active = None
@@ -104,7 +108,7 @@ class TabCtrl(object):
        #self.add_tab()
 
     def add_tab(self):
-        tab = ttk.Frame(self.nb)
+        tab = tk.Frame(self.nb, bg='#e6e6e6')
 
         combo = TextScrollCombo(tab, self)
         combo.pack(fill="both", expand=True)
@@ -130,12 +134,14 @@ class TabCtrl(object):
             self.nb.tab(tab_num, text = name)
 
     def close_corrent_tab(self):
-        try:
             tab_num = self.nb.index('current')
-            if tab_num != None:
-                self.nb.forget(tab_num)
+            if tab_num != None :
+                for item in self.nb.tabs[tab_num].winfo_children():
+                    item.destroy()
                 del self.nb.tabs[tab_num]
-        except:
-            pass
+                self.nb.forget(tab_num)
+
+                if len(self.nb.tabs) <=0:
+                    self.nb.pack_forget()
 
 

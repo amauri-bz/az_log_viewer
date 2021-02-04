@@ -29,6 +29,7 @@ if __name__ == '__main__':
     root.geometry('800x500')
     root.minsize(400, 200)
     root.protocol('WM_DELETE_WINDOW', confirmExit)
+    root.config(bg='#e6e6e6')
 
     App(root)
 
