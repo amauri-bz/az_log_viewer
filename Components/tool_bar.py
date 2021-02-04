@@ -10,6 +10,8 @@ class ToolBar():
         self.tab_ctrl = tab
         self.op_fac = OperationFactory()
         self.add_tool_bar()
+        self.find_list = []
+        self.actual_pos = 0
 
     def add_tool_bar(self):
         toolbar = tk.Frame(self.root, borderwidth=1, relief='raised', bg='#e6e6e6')
@@ -56,5 +58,44 @@ class ToolBar():
         cut_btn.image = _photo
         cut_btn.pack(side=tk.LEFT)
 
+
+
+        next_btn = tk.Button(toolbar,
+        text = "Next",
+        command=self.next)
+        next_btn.pack(side=tk.RIGHT)
+
+        sv = tk.StringVar()
+        sv.trace("w", lambda name, index, mode, sv=sv: self.find(sv))
+        self.edit = tk.Entry(toolbar, textvariable=sv)
+        self.edit.pack(side=tk.RIGHT, fill=tk.BOTH)
+        tk.Label(toolbar,text='Find:').pack(side=tk.RIGHT)
+
         # Add the toolbar.
         toolbar.pack(side=tk.TOP,fill=tk.X)
+
+    def find(self, sv):
+        self.tag_text = self.tab_ctrl.get_text().text
+
+        self.tag_text.tag_remove('found', '1.0', tk.END)
+        s = self.edit.get()
+        if s:
+            idx = '1.0'
+            while 1: 
+                idx = self.tag_text.search(s, idx, nocase=1, stopindex=tk.END)
+                if not idx: break
+                lastidx = '%s+%dc' % (idx, len(s))
+                self.tag_text.tag_add('found', idx, lastidx)
+                self.find_list.append(lastidx)
+                idx = lastidx
+        self.tag_text.see(self.find_list[0])
+        self.actual_pos = 0
+        self.tag_text.tag_config('found', foreground='red')
+
+    def next(self):
+        self.actual_pos+=1
+        if self.actual_pos < len(self.find_list):
+            self.tag_text.see(self.find_list[self.actual_pos])
+        else:
+            self.actual_pos = 0
+
