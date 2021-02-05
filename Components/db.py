@@ -2,7 +2,9 @@ class Database:
     _instance = None
 
     def __init__(self):
-        self.db={};
+        self.db={}
+        self.find_list = []
+        self.actual_pos = 0
 
     @classmethod
     def instance(cls):
