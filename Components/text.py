@@ -5,26 +5,78 @@ from tkinter import ttk
 from Components.db import Database
 from Components.pop_up_menu import PopUpMenu
 
+#Line number solution from:
+#https://stackoverflow.com/questions/16369470/tkinter-adding-line-number-to-text-widget
+class TextLineNumbers(tk.Canvas):
+    def __init__(self, *args, **kwargs):
+        tk.Canvas.__init__(self, *args, **kwargs)
+        self.textwidget = None
+
+    def attach(self, text_widget):
+        self.textwidget = text_widget
+
+    def redraw(self, *args):
+        '''redraw line numbers'''
+        self.delete("all")
+
+        i = self.textwidget.index("@0,0")
+        while True :
+            dline= self.textwidget.dlineinfo(i)
+            if dline is None: break
+            y = dline[1]
+            linenum = str(i).split(".")[0]
+            self.create_text(2,y,anchor="nw", text=linenum)
+            i = self.textwidget.index("%s+1line" % i)
+
+#Line number solution from:
+#https://stackoverflow.com/questions/16369470/tkinter-adding-line-number-to-text-widget
+class CustomText(tk.Text):
+    def __init__(self, *args, **kwargs):
+        tk.Text.__init__(self, *args, **kwargs)
+
+        # create a proxy for the underlying widget
+        self._orig = self._w + "_orig"
+        self.tk.call("rename", self._w, self._orig)
+        self.tk.createcommand(self._w, self._proxy)
+
+    def _proxy(self, *args):
+        # let the actual widget perform the requested action
+        cmd = (self._orig,) + args
+        result = self.tk.call(cmd)
+
+        # generate an event if something was added or deleted,
+        # or the cursor position changed
+        if (args[0] in ("insert", "replace", "delete") or
+            args[0:3] == ("mark", "set", "insert") or
+            args[0:2] == ("xview", "moveto") or
+            args[0:2] == ("xview", "scroll") or
+            args[0:2] == ("yview", "moveto") or
+            args[0:2] == ("yview", "scroll")):
+            self.event_generate("<<Change>>", when="tail")
+
+        # return what the actual widget returned
+        return result
+
+
 class TextScrollCombo(tk.Frame):
 
     def __init__(self, root, tab):
         super().__init__(root, bg='#e6e6e6')
         self.root = root
         self.tab = tab
-        # ensure a consistent GUI size
-        self.grid_propagate(False)
-        # implement stretchability
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=1)
 
         # create a Text widget
-        self.text = tk.Text(self)
-        self.text.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
+        self.text = CustomText(self)
+        self.linenumbers = TextLineNumbers(self, width=30)
+        self.linenumbers.attach(self.text)
 
         # create a Scrollbar and associate it with txt
         scrollb = ttk.Scrollbar(self, command=self.text.yview)
-        scrollb.grid(row=0, column=1, sticky='nsew')
         self.text['yscrollcommand'] = scrollb.set
+
+        self.linenumbers.pack(side="left", fill="y")
+        scrollb.pack(side="right", fill="y")
+        self.text.pack(side="right", fill="both", expand=True)
 
         self.text.config(font=("consolas", 12), undo=True, wrap='word')
         self.text.config(borderwidth=3, relief="sunken")
@@ -41,6 +93,11 @@ class TextScrollCombo(tk.Frame):
         self.text.bind("<Return>", self.highlight)
         self.text.bind("<<Paste>>", self.highlight)
         self.text.bind("<Button-3>", self.popup)
+        self.text.bind("<<Change>>", self._on_change)
+        self.text.bind("<Configure>", self._on_change)
+
+    def _on_change(self, event):
+        self.linenumbers.redraw()
 
     def popup(self, event):
         try:

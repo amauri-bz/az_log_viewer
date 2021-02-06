@@ -47,7 +47,7 @@ class BookMarks(Operation):
         actual_index = tab_text.index(tk.INSERT)
 
         mark_list = []
-        for mark in tab_text.mark_names():  
+        for mark in tab_text.mark_names():
             if mark.find("bmark") != -1:
                 mark_list.append(int(mark.split('-')[1]))
         mark_list.sort(reverse=True)
