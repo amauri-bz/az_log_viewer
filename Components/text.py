@@ -44,7 +44,7 @@ class TextScrollCombo(tk.Frame):
 
     def popup(self, event):
         try:
-            self.popup_menu.menubar.tk_popup(event.x_root, event.y_root, 0)
+            self.popup_menu.menubar.tk_popup(event.x_root+70, event.y_root, 0)
         finally:
             self.popup_menu.menubar.grab_release()
 
