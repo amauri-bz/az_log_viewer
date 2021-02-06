@@ -56,6 +56,9 @@ class ToolBar():
         cut_btn.image = _photo
         cut_btn.pack(side=tk.LEFT)
 
+        #-------------------------------
+        # FIND SYSTEM
+        #-------------------------------
         sv = tk.StringVar()
         self.edit = tk.Entry(toolbar, textvariable=sv)
         sv.trace("w", lambda name, index, mode, sv=sv, text=self.edit: self.op_fac.create("find", self.root, self.tab).find(sv, text))
@@ -67,7 +70,9 @@ class ToolBar():
         next_btn = tk.Button(toolbar,
         text = "Next",
         command= lambda edit=self.edit: self.op_fac.create("find", self.root, self.tab).find_next(edit))
-        
+
+        self.edit.bind("<Return>", lambda event, edit=self.edit: self.op_fac.create("find", self.root, self.tab).find_next(edit))
+
         prev_btn.pack(side=tk.RIGHT)
         next_btn.pack(side=tk.RIGHT)
         self.edit.pack(side=tk.RIGHT, fill=tk.BOTH)
