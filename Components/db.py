@@ -4,6 +4,7 @@ class Database:
     def __init__(self):
         self.db={}
         self.actual_pos = '0.0'
+        self.actual_find = ''
 
     @classmethod
     def instance(cls):

@@ -14,6 +14,7 @@ from Operations.undo import Undo
 from Operations.redo import Redo
 from Operations.find import Find
 from Operations.bookmarks import BookMarks
+from Operations.go_to_line import GoToLine
 
 class OperationFactory:
     def create(self, name, root, tab):
@@ -49,5 +50,7 @@ class OperationFactory:
             return Find(root, tab)
         elif name == 'bookmark':
             return BookMarks(root, tab)
+        elif name == 'go_to_line':
+            return GoToLine(root, tab)
         else:
             return Help(root, tab)

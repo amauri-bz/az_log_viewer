@@ -40,9 +40,13 @@ class CustomText(tk.Text):
         self.tk.createcommand(self._w, self._proxy)
 
     def _proxy(self, *args):
+        result = ""
         # let the actual widget perform the requested action
         cmd = (self._orig,) + args
-        result = self.tk.call(cmd)
+        try:
+            result = self.tk.call(cmd)
+        except:
+            pass
 
         # generate an event if something was added or deleted,
         # or the cursor position changed
@@ -53,6 +57,8 @@ class CustomText(tk.Text):
             args[0:2] == ("yview", "moveto") or
             args[0:2] == ("yview", "scroll")):
             self.event_generate("<<Change>>", when="tail")
+            self.event_generate("<<Find>>", when="tail")
+            self.event_generate("<<Highlight>>", when="tail")
 
         # return what the actual widget returned
         return result
@@ -91,8 +97,7 @@ class TextScrollCombo(tk.Frame):
         self.popup_menu = PopUpMenu(self.root, self.tab)
 
     def bind_text_event(self):
-        self.text.bind("<Return>", self.highlight)
-        self.text.bind("<<Paste>>", self.highlight)
+        self.text.bind("<<Highlight>>", self.highlight)
         self.text.bind("<Button-3>", self.popup)
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
@@ -117,4 +122,4 @@ class TextScrollCombo(tk.Frame):
                 x = re.search(patern, contents)
                 if(x != None):
                     self.text.tag_configure(patern, background=db.get_value(patern))
-                    self.text.tag_add(patern, "%s.0" % i, "%s.0" % (i+1))
+                    self.text.tag_add(patern, "%s.0" % i, "%s.end" % i)

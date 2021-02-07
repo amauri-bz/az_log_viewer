@@ -19,6 +19,8 @@ class PopUpMenu:
         self.menubar.add_command(label="Paste", command=self.op_fac.create("past", self.root, self.tab).execute)
         self.menubar.add_command(label="Select All", command=self.op_fac.create("select_all", self.root, self.tab).execute)
         self.menubar.add_separator()
+        self.menubar.add_command(label="Go to Line", command=self.op_fac.create("go_to_line", self.root, self.tab).execute)
+        self.menubar.add_separator()
         self.menubar.add_command(label="Add Bookmark", command=self.op_fac.create("bookmark", self.root, self.tab).add_bookmark)
         self.menubar.add_command(label="Next Bookmark", command=self.op_fac.create("bookmark", self.root, self.tab).next_bookmark)
         self.menubar.add_command(label="Previus Bookmark", command=self.op_fac.create("bookmark", self.root, self.tab).prev_bookmark)

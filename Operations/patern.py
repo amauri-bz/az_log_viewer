@@ -29,15 +29,14 @@ class Patern(Operation):
         button1.pack()
 
     def check_selection(self):
-        tab_text = self.tab.get_text()
         try:
+            tab_text = self.tab.get_text()
             text = tab_text.text.get("sel.first", "sel.last")
             if text != '':
                 self.entry1.delete(0,tk.END)
                 self.entry1.insert(0, text)
         except:
             pass
-
 
     def color_chooser(self):
         patern = self.entry1.get()
