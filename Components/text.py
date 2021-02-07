@@ -64,6 +64,7 @@ class TextScrollCombo(tk.Frame):
         super().__init__(root, bg='#e6e6e6')
         self.root = root
         self.tab = tab
+        self.changed = False
 
         # create a Text widget
         self.text = CustomText(self)
@@ -97,6 +98,8 @@ class TextScrollCombo(tk.Frame):
         self.text.bind("<Configure>", self._on_change)
 
     def _on_change(self, event):
+        if self.text.index(tk.INSERT) != "1.0":
+            self.changed = True
         self.linenumbers.redraw()
 
     def popup(self, event):

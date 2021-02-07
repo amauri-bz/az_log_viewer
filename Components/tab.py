@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from Components.text import TextScrollCombo
+from tkinter import messagebox
 
 class CustomNotebook(ttk.Notebook):
     """
@@ -42,6 +43,10 @@ class CustomNotebook(ttk.Notebook):
 
         element =  self.identify(event.x, event.y)
         index = self.index("@%d,%d" % (event.x, event.y))
+
+        if self.tabs[index].changed == True:
+            if not messagebox.askokcancel('Close', 'Are you sure you want to close the tab?'):
+                return
 
         if "close" in element and self._active == index:
             for item in self.tabs[index].winfo_children():
@@ -136,6 +141,10 @@ class TabCtrl(object):
     def close_corrent_tab(self):
             tab_num = self.nb.index('current')
             if tab_num != None :
+                if self.tabs[index].changed == True:
+                    if not messagebox.askokcancel('Close', 'Are you sure you want to close the tab?'):
+                        return
+
                 for item in self.nb.tabs[tab_num].winfo_children():
                     item.destroy()
                 del self.nb.tabs[tab_num]
