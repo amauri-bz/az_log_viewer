@@ -129,9 +129,12 @@ class TabCtrl(object):
             self.nb.tabs[i].highlight(None)
 
     def get_text(self):
-        tab_num = self.nb.index('current')
-        if tab_num != None:
-            return self.nb.tabs[tab_num]
+        try:
+            tab_num = self.nb.index('current')
+            if tab_num != None:
+                return self.nb.tabs[tab_num]
+        except:
+            return None
 
     def set_tab_name(self, name):
         tab_num = self.nb.index('current')

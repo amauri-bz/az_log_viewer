@@ -113,7 +113,15 @@ class TextScrollCombo(tk.Frame):
         finally:
             self.popup_menu.menubar.grab_release()
 
+    def clean_highlight(self):
+        for tag in self.text.tag_names():
+            x = re.search("ptrn-", tag)
+            if x  != None:
+                self.text.tag_remove(tag, '1.0', tk.END)
+
     def highlight(self, event):
+        self.clean_highlight()
+
         lastline = self.text.index("end").split(".")[0]
         for i in range(1, int(lastline)):
             contents = self.text.get("%s.0" % i, "%s.end" % i)
@@ -121,5 +129,5 @@ class TextScrollCombo(tk.Frame):
             for patern in db.get_keys():
                 x = re.search(patern, contents)
                 if(x != None):
-                    self.text.tag_configure(patern, background=db.get_value(patern))
-                    self.text.tag_add(patern, "%s.0" % i, "%s.end" % i)
+                    self.text.tag_configure("ptrn-" + patern, background=db.get_value(patern))
+                    self.text.tag_add("ptrn-" + patern, "%s.0" % i, "%s.end" % i)
