@@ -1,5 +1,6 @@
 from tkinter import simpledialog
 from Operations.operation import Operation
+from Components.status_bar import StatusBar
 
 class GoToLine(Operation):
 
@@ -17,4 +18,5 @@ class GoToLine(Operation):
             column = tab_text.text.index('insert').split('.')[1]
             tab_text.text.mark_set('insert', '%d.%s' % (lineno, column))
             tab_text.text.see('insert')
+            StatusBar().set("got to: %d" % (lineno))
         tab_text.text.focus()

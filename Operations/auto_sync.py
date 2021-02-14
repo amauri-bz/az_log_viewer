@@ -3,6 +3,7 @@ import tkinter.ttk as ttk
 
 from Components.db import Database
 from Operations.operation import Operation
+from Components.status_bar import StatusBar
 
 class AutoSync(Operation):
 
@@ -19,6 +20,7 @@ class AutoSync(Operation):
         self.canvas1.geometry('250x250')
         self.canvas1.minsize(200, 150)
         self.canvas1.maxsize(300, 300)
+        self.canvas1.protocol('WM_DELETE_WINDOW', self.confirmExit)
 
         grid_pady = 2
         grid_padx = 10
@@ -75,6 +77,10 @@ class AutoSync(Operation):
         self.disable_ext_param()
         self.canvas1.grab_set()
 
+    def confirmExit(self):
+        StatusBar().set("aborted - operation aborted")
+        self.canvas1.destroy()
+
     def check_box(self, var1):
         if var1.get() == 0:
             self.external = False
@@ -97,19 +103,22 @@ class AutoSync(Operation):
             interv = self.entry_interv.get()
             interv = int(interv) if interv != "" else 5
             if self.external != True:
-                tab_text.text_sync.syn_enable(tab_text.saved_path, interv)
+                tab_text.text_sync.syn_local_enable(interv)
+                StatusBar().set("local sync enabled")
             else:
                 server = self.entry_ip.get()
                 user = self.entry_user.get()
                 passwor = self.entry_pass.get()
                 path =self.entry_path.get()
-                tab_text.text_sync.syn_enable(server, 22, user, passwor, path, interv)
+                tab_text.text_sync.syn_ext_enable(server, 22, user, passwor, path, interv)
+                StatusBar().set("external sync enabled")
         self.close_window()
 
     def syn_disable(self):
         tab_text = self.tab.get_text()
         if tab_text != None:
             tab_text.text_sync.syn_disable()
+        StatusBar().set("sync disabled")
         self.close_window()
 
     def close_window(self):

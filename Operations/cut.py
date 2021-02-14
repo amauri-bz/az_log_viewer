@@ -1,5 +1,6 @@
 from tkinter import *
 from Operations.operation import Operation
+from Components.status_bar import StatusBar
 
 class Cut(Operation):
 
@@ -16,3 +17,4 @@ class Cut(Operation):
         if text != '':
             tab_text.text.clipboard_append(text)
             tab_text.text.delete("sel.first", "sel.last")
+            StatusBar().set("cuted")

@@ -21,6 +21,7 @@ class Pattern(Operation):
         self.canvas1.geometry('300x200')
         self.canvas1.minsize(250, 150)
         self.canvas1.maxsize(350, 250)
+        self.canvas1.protocol('WM_DELETE_WINDOW', self.confirmExit)
 
         label1 = tk.Label(self.canvas1, text='Add Pattern')
         label1.config(font=('helvetica', 15))
@@ -56,6 +57,10 @@ class Pattern(Operation):
 
         self.canvas1.grab_set()
 
+    def confirmExit(self):
+        StatusBar().set("aborted - operation aborted")
+        self.canvas1.destroy()
+
     def check_selection(self):
         tab_text = self.tab.get_text()
         if tab_text == None: return
@@ -63,7 +68,6 @@ class Pattern(Operation):
         if text != '':
             self.entry_pattern.delete(0,tk.END)
             self.entry_pattern.insert(0, text)
-
 
     def color_chooser(self):
         proj = self.entry_project.get()
@@ -76,7 +80,7 @@ class Pattern(Operation):
                 StatusBar().set("pattern added with success")
             else:
                 print(db.instance().actual_pattern)
-                if db.instance().actual_pattern != "" and db.instance().actual_pattern != None:
+                if db.instance().actual_pattern != "None" and db.instance().actual_pattern != None:
                     db.add_item(db.instance().actual_pattern, pattern, color[1])
                     StatusBar().set("pattern added with success")
                 else:

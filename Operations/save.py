@@ -1,6 +1,7 @@
 import os
 from tkinter import filedialog
 from Operations.operation import Operation
+from Components.status_bar import StatusBar
 
 class Save(Operation):
 
@@ -28,8 +29,9 @@ class Save(Operation):
             tab_text.saved_path = filename
             head, tail = os.path.split(filename)
             self.tab.set_tab_name(tail)
+            StatusBar().set("saved: %s"%(filename))
         else:
-            print("saving '%s' failed", filename)
+            StatusBar().set("aborted - saving process: %s"%(filename))
 
     def save_file(self, tab_text, path):
         try:

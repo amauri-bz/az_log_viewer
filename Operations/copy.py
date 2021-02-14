@@ -1,5 +1,6 @@
 from tkinter import *
 from Operations.operation import Operation
+from Components.status_bar import StatusBar
 
 class Copy(Operation):
 
@@ -15,3 +16,4 @@ class Copy(Operation):
         text = tab_text.text.get("sel.first", "sel.last")
         if text != '':
             tab_text.text.clipboard_append(text)
+            StatusBar().set("copied")
