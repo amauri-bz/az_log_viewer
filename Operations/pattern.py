@@ -41,7 +41,6 @@ class Pattern(Operation):
         label1.pack()
 
         self.entry_project = tk.Entry(self.canvas1)
-        self.check_selection()
         self.entry_project.pack()
 
         label1 = tk.Label(self.canvas1, text='New Pattern:')
@@ -49,13 +48,13 @@ class Pattern(Operation):
         label1.pack()
 
         self.entry_pattern = tk.Entry(self.canvas1)
-        self.check_selection()
         self.entry_pattern.pack()
 
         button1 = tk.Button(self.canvas1, text='Add', command=self.color_chooser, font=('helvetica', 9, 'bold'))
         button1.pack()
 
         self.canvas1.grab_set()
+        self.check_selection()
 
     def confirmExit(self):
         StatusBar().set("aborted - operation aborted")

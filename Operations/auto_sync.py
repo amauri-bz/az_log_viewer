@@ -30,13 +30,13 @@ class AutoSync(Operation):
         label1.grid(row=0,column=0,columnspan=2)
 
         var1 = tk.IntVar()
-        c1 = tk.Checkbutton(self.canvas1,
+        self.check_ext = tk.Checkbutton(self.canvas1,
             text='External sync',
             variable=var1,
             onvalue=1,
             offvalue=0,
             command= lambda var=var1: self.check_box(var))
-        c1.grid(row=1,column=0,columnspan=2)
+        self.check_ext.grid(row=1,column=0,columnspan=2)
 
         label1 = tk.Label(self.canvas1, text='IP:')
         label1.config(font=('helvetica', 10))
@@ -76,6 +76,7 @@ class AutoSync(Operation):
 
         self.disable_ext_param()
         self.canvas1.grab_set()
+        self.init_entries()
 
     def confirmExit(self):
         StatusBar().set("aborted - operation aborted")
@@ -88,8 +89,20 @@ class AutoSync(Operation):
         else:
             cmd = 'normal'
             self.external = True
-
         self.disable_ext_param(cmd)
+
+    def init_entries(self):
+        if self.external == True:
+            tab_text = self.tab.get_text()
+            if tab_text == None: return
+
+            self.disable_ext_param('normal')
+            self.check_ext.select()
+            self.entry_ip.insert(0, str(tab_text.text_sync.server))
+            self.entry_user.insert(0, str(tab_text.text_sync.user))
+            self.entry_pass.insert(0, str(tab_text.text_sync.passwor))
+            self.entry_path.insert(0, str(tab_text.text_sync.path))
+            self.entry_interv.insert(0, str(tab_text.text_sync.interv))
 
     def disable_ext_param(self, cmd = 'disabled'):
         self.entry_ip.config(state=cmd)
@@ -118,7 +131,10 @@ class AutoSync(Operation):
         tab_text = self.tab.get_text()
         if tab_text != None:
             tab_text.text_sync.syn_disable()
-        StatusBar().set("sync disabled")
+            self.external = False
+            StatusBar().set("sync disabled")
+        else:
+            StatusBar().set("aborted - sync not disabled")
         self.close_window()
 
     def close_window(self):
