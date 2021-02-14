@@ -1,5 +1,5 @@
 import tkinter as tk
-from Operations.factory import OperationFactory
+from Components.factory import OperationFactory
 
 class PopUpMenu:
     def __init__(self, root, tab):

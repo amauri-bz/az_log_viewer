@@ -13,22 +13,27 @@ class BookMarks(Operation):
 
     def add_bookmark(self):
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
         index = tab_text.index(tk.INSERT)
         tab_text.mark_set("bmark-"+index.split('.')[0], index)
 
     def remove_bookmark(self):
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
         index = tab_text.index(tk.INSERT)
         tab_text.mark_unset("bmark-"+index.split('.')[0])
 
     def remove_all_bookmark(self):
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
+
         for mark in tab_text.mark_names():
             if mark.find("bmark") != -1:
                 tab_text.mark_unset(mark)
 
     def next_bookmark(self):
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
         actual_index = tab_text.index(tk.INSERT)
 
         mark_list = []
@@ -44,6 +49,7 @@ class BookMarks(Operation):
 
     def prev_bookmark(self):
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
         actual_index = tab_text.index(tk.INSERT)
 
         mark_list = []

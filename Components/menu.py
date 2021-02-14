@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from Operations.factory import OperationFactory
+from Components.factory import OperationFactory
 from Components.tab import TabCtrl
 
 class Menu:
@@ -12,7 +12,7 @@ class Menu:
         self.menubar = tk.Menu(root)
         self.build_file_menu()
         self.build_edit_menu()
-        self.build_patern_menu()
+        self.build_config_menu()
         self.build_help_menu()
         self.root.config(menu=self.menubar)
 
@@ -38,10 +38,11 @@ class Menu:
         editmenu.add_command(label="Select All", command=self.op_fac.create("select_all", self.root, self.tab).execute)
         self.menubar.add_cascade(label="Edit", menu=editmenu)
 
-    def build_patern_menu(self):
+    def build_config_menu(self):
         editmenu = tk.Menu(self.menubar, tearoff=0)
-        editmenu.add_command(label="Add", command=self.op_fac.create("patern", self.root, self.tab).execute)
-        self.menubar.add_cascade(label="Patern", menu=editmenu)
+        editmenu.add_command(label="Patern", command=self.op_fac.create("patern", self.root, self.tab).execute)
+        editmenu.add_command(label="Auto Sync", command=self.op_fac.create("auto_sync", self.root, self.tab).execute)
+        self.menubar.add_cascade(label="Config", menu=editmenu)
 
     def build_help_menu(self):
         helpmenu = tk.Menu(self.menubar, tearoff=0)

@@ -19,9 +19,9 @@ class PaternMenu(ttk.OptionMenu):
         db = Database.instance()
         db.instance().actual_pattern = self.tkvar.get()
         if self.top_level == False:
-            text = self.tab.get_text()
-            if text != None:
-                text.highlight(None)
+            tab_text = self.tab.get_text()
+            if tab_text == None: return
+            tab_text.highlight(None)
 
     def reset_dropdown(self):
         db = Database.instance()

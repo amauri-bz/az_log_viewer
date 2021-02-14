@@ -4,6 +4,7 @@ from tkinter import ttk
 
 from Components.db import Database
 from Components.pop_up_menu import PopUpMenu
+from Components.text_sync import TextSync
 
 #Line number solution from:
 #https://stackoverflow.com/questions/16369470/tkinter-adding-line-number-to-text-widget
@@ -20,7 +21,7 @@ class TextLineNumbers(tk.Canvas):
         self.delete("all")
 
         i = self.textwidget.index("@0,0")
-        while True :
+        while True:
             dline= self.textwidget.dlineinfo(i)
             if dline is None: break
             y = dline[1]
@@ -71,6 +72,8 @@ class TextScrollCombo(tk.Frame):
         self.root = root
         self.tab = tab
         self.changed = False
+        self.refresh_enable = False
+        self.refresh_interv = 5
 
         # create a Text widget
         self.text = CustomText(self)
@@ -95,6 +98,7 @@ class TextScrollCombo(tk.Frame):
         self.saved_path = ""
 
         self.popup_menu = PopUpMenu(self.root, self.tab)
+        self.text_sync = TextSync(self.tab)
 
     def bind_text_event(self):
         self.text.bind("<<Highlight>>", self.highlight)

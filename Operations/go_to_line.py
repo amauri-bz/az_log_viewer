@@ -8,12 +8,13 @@ class GoToLine(Operation):
        self.tab = tab
 
     def execute(self):
-        tab = self.tab.get_text()
+        tab_text = self.tab.get_text()
+        if tab_text == None: return
         lineno = simpledialog.askinteger(
             "Go to Line", "Type a line number and press Enter:",
-            parent=tab.winfo_toplevel())
+            parent=tab_text.winfo_toplevel())
         if lineno is not None:
-            column = tab.text.index('insert').split('.')[1]
-            tab.text.mark_set('insert', '%d.%s' % (lineno, column))
-            tab.text.see('insert')
-        tab.text.focus()
+            column = tab_text.text.index('insert').split('.')[1]
+            tab_text.text.mark_set('insert', '%d.%s' % (lineno, column))
+            tab_text.text.see('insert')
+        tab_text.text.focus()

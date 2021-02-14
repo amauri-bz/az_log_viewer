@@ -22,9 +22,7 @@ class Open(Operation):
 
         self.tab.add_tab()
         tab_text = self.tab.get_text()
-
-        if tab_text == None:
-            return
+        if tab_text == None: return
         
         self.open_file(tab_text, filename)
         tab_text.saved_path = filename

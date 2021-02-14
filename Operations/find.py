@@ -9,6 +9,7 @@ class Find(Operation):
         self.root = root
         self.tab = tab
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
         tab_text.bind("<<Find>>", self._on_change)
 
     def execute(self):
@@ -17,6 +18,7 @@ class Find(Operation):
     def find(self, sv, edit, text=""):
         db = Database.instance()
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
 
         tab_text.tag_remove('found', '1.0', tk.END)
         s = edit.get() if edit != None else text
@@ -39,6 +41,7 @@ class Find(Operation):
     def find_next(self, edit):
         db = Database.instance()
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
         edit_txt = edit.get()
 
         if edit_txt =="":
@@ -55,6 +58,7 @@ class Find(Operation):
     def find_prev(self, edit):
         db = Database.instance()
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
         edit_txt = edit.get()
 
         if edit_txt =="":
@@ -70,6 +74,7 @@ class Find(Operation):
 
     def _on_change(self, event):
         tab_text = self.tab.get_text().text
+        if tab_text == None: return
         if tab_text.index(tk.INSERT) != "1.0":
             db = Database.instance()
             self.find(None, None, text=db.actual_find)

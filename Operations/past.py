@@ -9,9 +9,7 @@ class Past(Operation):
 
     def execute(self):
         tab_text = self.tab.get_text()
-        try:
-            text = tab_text.text.selection_get(selection='CLIPBOARD')
-            if text != '':
-                tab_text.text.insert('insert', text)
-        except:
-            pass
+        if tab_text == None: return
+        text = tab_text.text.selection_get(selection='CLIPBOARD')
+        if text != '':
+            tab_text.text.insert('insert', text)

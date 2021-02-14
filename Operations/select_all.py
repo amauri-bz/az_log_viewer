@@ -9,6 +9,7 @@ class SelectAll(Operation):
 
     def execute(self):
         tab_text = self.tab.get_text()
+        if tab_text == None: return
         self.select_all(tab_text)
 
     # Select all the text in textbox

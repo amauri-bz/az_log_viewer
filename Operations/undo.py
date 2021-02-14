@@ -9,7 +9,5 @@ class Undo(Operation):
 
     def execute(self):
         tab_text = self.tab.get_text()
-        try:
-            tab_text.text.edit_undo()
-        except:
-            pass
+        if tab_text == None: return
+        tab_text.text.edit_undo()

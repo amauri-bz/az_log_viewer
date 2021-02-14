@@ -9,10 +9,9 @@ class Copy(Operation):
 
     def execute(self):
         tab_text = self.tab.get_text()
-        try:
-            tab_text.text.clipboard_clear()
-            text = tab_text.text.get("sel.first", "sel.last")
-            if text != '':
-                tab_text.text.clipboard_append(text)
-        except:
-            pass
+        if tab_text == None: return
+
+        tab_text.text.clipboard_clear()
+        text = tab_text.text.get("sel.first", "sel.last")
+        if text != '':
+            tab_text.text.clipboard_append(text)

@@ -13,6 +13,7 @@ from Operations.cut import Cut
 from Operations.undo import Undo
 from Operations.redo import Redo
 from Operations.find import Find
+from Operations.auto_sync import AutoSync
 from Operations.bookmarks import BookMarks
 from Operations.go_to_line import GoToLine
 
@@ -52,5 +53,7 @@ class OperationFactory:
             return BookMarks(root, tab)
         elif name == 'go_to_line':
             return GoToLine(root, tab)
+        elif name == 'auto_sync':
+            return AutoSync(root, tab)
         else:
             return Help(root, tab)

@@ -17,6 +17,9 @@ class Patern(Operation):
 
     def add_patern(self):
         self.canvas1 = tk.Toplevel(self.root)
+        self.canvas1.geometry('300x200')
+        self.canvas1.minsize(250, 150)
+        self.canvas1.maxsize(350, 250)
 
         label1 = tk.Label(self.canvas1, text='Add Patern')
         label1.config(font=('helvetica', 15))
@@ -50,15 +53,16 @@ class Patern(Operation):
         button1 = tk.Button(self.canvas1, text='Add', command=self.color_chooser, font=('helvetica', 9, 'bold'))
         button1.pack()
 
+        self.canvas1.grab_set()
+
     def check_selection(self):
-        try:
-            tab_text = self.tab.get_text()
-            text = tab_text.text.get("sel.first", "sel.last")
-            if text != '':
-                self.entry_patern.delete(0,tk.END)
-                self.entry_patern.insert(0, text)
-        except:
-            pass
+        tab_text = self.tab.get_text()
+        if tab_text == None: return
+        text = tab_text.text.get("sel.first", "sel.last")
+        if text != '':
+            self.entry_patern.delete(0,tk.END)
+            self.entry_patern.insert(0, text)
+
 
     def color_chooser(self):
         proj = self.entry_project.get()
@@ -70,6 +74,7 @@ class Patern(Operation):
                 db.add_item(proj, patern, color[1])
             else:
                 db.add_item(db.instance().actual_pattern, patern, color[1])
+        self.canvas1.grab_release()
         self.canvas1.destroy()
         self.canvas1.update()
         self.tab.refresh_tabs()

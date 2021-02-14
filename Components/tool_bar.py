@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 from Components.db import Database
 from Components.pater_menu import PaternMenu
 
-from Operations.factory import OperationFactory
+from Components.factory import OperationFactory
 
 class ToolBar():
 

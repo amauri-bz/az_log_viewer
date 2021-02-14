@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-from Operations.factory import OperationFactory
+from Components.factory import OperationFactory
 from Components.tab import TabCtrl
 from Components.tool_bar import ToolBar
 from Components.menu import Menu

@@ -11,6 +11,8 @@ class Save(Operation):
 
     def execute(self):
         tab_text = self.tab.get_text()
+        if tab_text == None: return
+
         filename = tab_text.saved_path
         if self.cmd_name == "save_as" or filename == "":
             filename = filedialog.asksaveasfilename(
