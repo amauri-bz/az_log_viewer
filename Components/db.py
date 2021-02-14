@@ -9,7 +9,7 @@ class Database:
         self.conn = sqlite3.connect('project.db')
         self.actual_pos = '0.0'
         self.actual_find = ''
-        self.actual_pattern = "None"
+        self.actual_pattern = None
         self.create_table()
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -27,17 +27,17 @@ class Database:
         CREATE TABLE IF NOT EXISTS project (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             proj TEXT NOT NULL, 
-            patern TEXT NOT NULL, 
+            pattern TEXT NOT NULL,
             color TEXT
         );
         """)
 
-    def insert_data(self, proj, patern, color):
+    def insert_data(self, proj, pattern, color):
         cursor = self.conn.cursor()
         cursor.execute("""
-        INSERT INTO project (proj, patern, color)
+        INSERT INTO project (proj, pattern, color)
         VALUES (?,?,?)
-        """, (proj, patern, color))
+        """, (proj, pattern, color))
         self.conn.commit()
 
     def read_all(self):
@@ -48,7 +48,7 @@ class Database:
         for linha in cursor.fetchall():
             print(linha)
 
-    def read_all_paterns(self):
+    def read_all_patterns(self):
         cursor = self.conn.cursor()
         cursor.execute("""
         SELECT * FROM project WHERE proj = ?
@@ -68,43 +68,43 @@ class Database:
             ret.add(tupla[1])
         return ret
 
-    def read_data(self, proj, patern):
+    def read_data(self, proj, pattern):
         cursor = self.conn.cursor()
         cursor.execute("""
-        SELECT * FROM project WHERE proj = ? AND patern = ?
-        """, (proj, patern))
+        SELECT * FROM project WHERE proj = ? AND pattern = ?
+        """, (proj, pattern))
         ret = None
         for tupla in cursor.fetchall():
             ret = tupla[3]
         return ret
 
-    def update_data(self, proj, patern, color):
+    def update_data(self, proj, pattern, color):
         cursor = self.conn.cursor()
         cursor.execute("""
         UPDATE project
         SET color = ?
-        WHERE proj = ? AND patern = ?
-        """, (color, proj, patern))
+        WHERE proj = ? AND pattern = ?
+        """, (color, proj, pattern))
         self.conn.commit()
 
-    def delete_data(self, proj, patern):
+    def delete_data(self, proj, pattern):
         cursor = self.conn.cursor()
         cursor.execute("""
         DELETE FROM project
-        WHERE proj = ? AND patern = ?
-        """, (proj, patern))
+        WHERE proj = ? AND pattern = ?
+        """, (proj, pattern))
         self.conn.commit()
 
-    def add_item(self, proj, patern, color):
-        self.insert_data(proj, patern, color)
+    def add_item(self, proj, pattern, color):
+        self.insert_data(proj, pattern, color)
         if self.instance().actual_pattern == "None":
             self.instance().actual_pattern = proj
 
-    def get_value(self, patern):
-        return self.read_data(self.instance().actual_pattern, patern)
+    def get_value(self, pattern):
+        return self.read_data(self.instance().actual_pattern, pattern)
 
     def get_keys(self):
-        return self.read_all_paterns()
+        return self.read_all_patterns()
 
     def get_projects(self):
         return self.read_all_projects()

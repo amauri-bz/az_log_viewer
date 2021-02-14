@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from Components.db import Database
 
-class PaternMenu(ttk.OptionMenu):
+class PatternMenu(ttk.OptionMenu):
 
     def __init__(self, tab, frame, tkvar, top_level = False):
         ttk.OptionMenu.__init__(self, frame, tkvar, ())

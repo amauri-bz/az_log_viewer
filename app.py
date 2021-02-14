@@ -15,8 +15,8 @@ class App:
         self.tab = TabCtrl(self.root)
         self.toolbar = ToolBar(self.root, self.tab)
         self.menu = Menu(self.root, self.tab)
-        self.status_bar = StatusBar(self.root)
-        self.status_bar.instance.set_status("ola")
+        self.status = StatusBar(self.root)
+        self.status.set("ola")
 
 def confirmExit():
     if messagebox.askokcancel('Quit', 'Are you sure you want to exit?'):

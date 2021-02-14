@@ -1,6 +1,6 @@
 from Operations.new import New
 from Operations.save import Save
-from Operations.patern import Patern
+from Operations.pattern import Pattern
 from Operations.open import Open
 from Operations.close import Close
 from Operations.exit import Exit
@@ -25,8 +25,8 @@ class OperationFactory:
             return Save(root, tab, name)
         elif name == 'save_as':
             return Save(root, tab, name)
-        elif name == 'patern':
-            return Patern(root, tab)
+        elif name == 'pattern':
+            return Pattern(root, tab)
         elif name == 'open':
             return Open(root, tab)
         elif name == 'close':

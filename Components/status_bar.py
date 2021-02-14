@@ -16,5 +16,5 @@ class StatusBar(metaclass=Singleton):
         self.statusbar = ttk.Label(self.root, text="ready...", relief='sunken')
         self.statusbar.pack(side='bottom', fill='x')
 
-    def set_status(self, msg):
-        self.statusbar.config(text=msg)
+    def set(self, msg):
+        self.instance.statusbar.config(text=msg)

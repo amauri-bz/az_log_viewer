@@ -130,8 +130,8 @@ class TextScrollCombo(tk.Frame):
         for i in range(1, int(lastline)):
             contents = self.text.get("%s.0" % i, "%s.end" % i)
             db = Database.instance()
-            for patern in db.get_keys():
-                x = re.search(patern, contents)
+            for pattern in db.get_keys():
+                x = re.search(pattern, contents)
                 if(x != None):
-                    self.text.tag_configure("ptrn-" + patern, background=db.get_value(patern))
-                    self.text.tag_add("ptrn-" + patern, "%s.0" % i, "%s.end" % i)
+                    self.text.tag_configure("ptrn-" + pattern, background=db.get_value(pattern))
+                    self.text.tag_add("ptrn-" + pattern, "%s.0" % i, "%s.end" % i)

@@ -1,7 +1,7 @@
 import tkinter as tk 
 import tkinter.ttk as ttk
 from Components.db import Database
-from Components.pater_menu import PaternMenu
+from Components.patter_menu import PatternMenu
 
 from Components.factory import OperationFactory
 
@@ -82,10 +82,10 @@ class ToolBar():
         tk.Label(toolbar,text='Find:').pack(side=tk.RIGHT)
 
         #-------------------------------
-        # PATERN PROJECT SELECTOR
+        # PATTERN PROJECT SELECTOR
         #-------------------------------
         tkvar = tk.StringVar(self.root)
-        self.popupMenu = PaternMenu(self.tab, toolbar, tkvar)
+        self.popupMenu = PatternMenu(self.tab, toolbar, tkvar)
         self.popupMenu.pack(side=tk.RIGHT)
         self.popupMenu.configure(width=20)
 
