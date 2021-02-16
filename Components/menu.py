@@ -40,7 +40,8 @@ class Menu:
 
     def build_config_menu(self):
         editmenu = tk.Menu(self.menubar, tearoff=0)
-        editmenu.add_command(label="Pattern", command=self.op_fac.create("pattern", self.root, self.tab).execute)
+        editmenu.add_command(label="Add Pattern", command=self.op_fac.create("pattern_add", self.root, self.tab).execute)
+        editmenu.add_command(label="Edit Pattern", command=self.op_fac.create("pattern_edit", self.root, self.tab).execute)
         editmenu.add_command(label="Auto Sync", command=self.op_fac.create("auto_sync", self.root, self.tab).execute)
         self.menubar.add_cascade(label="Config", menu=editmenu)
 

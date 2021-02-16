@@ -9,7 +9,7 @@ class Database:
         self.conn = sqlite3.connect('project.db')
         self.actual_pos = '0.0'
         self.actual_find = ''
-        self.actual_pattern = None
+        self.actual_proj = None
         self.create_table()
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -52,7 +52,7 @@ class Database:
         cursor = self.conn.cursor()
         cursor.execute("""
         SELECT * FROM project WHERE proj = ?
-        """, (self.instance().actual_pattern,))
+        """, (self.instance().actual_proj,))
         ret = []
         for tupla in cursor.fetchall():
             ret.append(tupla[2])
@@ -95,13 +95,21 @@ class Database:
         """, (proj, pattern))
         self.conn.commit()
 
+    def delete_proj(self, proj):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+        DELETE FROM project
+        WHERE proj = ?
+        """, (proj,))
+        self.conn.commit()
+
     def add_item(self, proj, pattern, color):
         self.insert_data(proj, pattern, color)
-        if self.instance().actual_pattern == "None":
-            self.instance().actual_pattern = proj
+        if self.instance().actual_proj == "None":
+            self.instance().actual_proj = proj
 
     def get_value(self, pattern):
-        return self.read_data(self.instance().actual_pattern, pattern)
+        return self.read_data(self.instance().actual_proj, pattern)
 
     def get_keys(self):
         return self.read_all_patterns()

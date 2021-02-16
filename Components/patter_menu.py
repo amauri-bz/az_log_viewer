@@ -13,11 +13,12 @@ class PatternMenu(ttk.OptionMenu):
         db = Database.instance()
         self.tkvar.trace('w', self.change_dropdown)
         self.reset_dropdown()
-        self.tkvar.set(db.instance().actual_pattern)
+        self.tkvar.set(db.instance().actual_proj)
 
     def change_dropdown(self, *args):
         db = Database.instance()
-        db.instance().actual_pattern = self.tkvar.get()
+        db.instance().actual_proj = self.tkvar.get()
+        self.event_generate("<<ProjChange>>", when="tail")
         if self.top_level == False:
             tab_text = self.tab.get_text()
             if tab_text == None: return
@@ -31,5 +32,5 @@ class PatternMenu(ttk.OptionMenu):
             menu.add_command(label=string,
                              command=lambda value=string:
                                   self.tkvar.set(value))
-        self.tkvar.set(db.instance().actual_pattern)
-        self.after(2000, self.reset_dropdown)
+        self.tkvar.set(db.instance().actual_proj)
+        #self.after(2000, self.reset_dropdown)

@@ -7,7 +7,7 @@ from Operations.operation import Operation
 from Components.patter_menu import PatternMenu
 from Components.status_bar import StatusBar
 
-class Pattern(Operation):
+class PatternAdd(Operation):
 
     def __init__(self, root, tab):
        self.root = root
@@ -78,9 +78,8 @@ class Pattern(Operation):
                 db.add_item(proj, pattern, color[1])
                 StatusBar().set("pattern added with success")
             else:
-                print(db.instance().actual_pattern)
-                if db.instance().actual_pattern != "None" and db.instance().actual_pattern != None:
-                    db.add_item(db.instance().actual_pattern, pattern, color[1])
+                if db.instance().actual_proj != "None" and db.instance().actual_proj != None:
+                    db.add_item(db.instance().actual_proj, pattern, color[1])
                     StatusBar().set("pattern added with success")
                 else:
                     StatusBar().set("aborted - select a project or a new project name")
