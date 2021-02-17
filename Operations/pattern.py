@@ -107,6 +107,7 @@ class PatternEdit(Operation):
 
         self.canvas.grab_set()
         self.bind_text_event()
+        self.check_selection()
 
     def confirmExit(self):
         StatusBar().set("aborted - operation aborted")
@@ -169,3 +170,11 @@ class PatternEdit(Operation):
             self.text_frame.text.tag_remove("select_tag", '1.0', tk.END)
             self.text_frame.text.tag_add("select_tag", "%s.0" % line_idx, "%s.end" % line_idx)
             self.button_color.configure(bg = self.text_frame.data[pattern])
+
+    def check_selection(self):
+        tab_text = self.tab.get_text()
+        if tab_text == None: return
+        text = tab_text.text.get("sel.first", "sel.last")
+        if text != '':
+            self.entry_pattern.delete(0,tk.END)
+            self.entry_pattern.insert(0, text)

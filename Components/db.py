@@ -55,7 +55,8 @@ class Database:
         """, (self.instance().actual_proj,))
         ret = []
         for tupla in cursor.fetchall():
-            ret.append(tupla[2])
+            if tupla[2] != "None":
+                ret.append(tupla[2])
         return ret
 
     def read_all_projects(self):
@@ -64,6 +65,7 @@ class Database:
         SELECT * FROM project;
         """)
         ret = set()
+        ret.add("None")
         for tupla in cursor.fetchall():
             ret.add(tupla[1])
         return ret

@@ -33,4 +33,5 @@ class PatternMenu(ttk.OptionMenu):
                              command=lambda value=string:
                                   self.tkvar.set(value))
         self.tkvar.set(db.instance().actual_proj)
-        #self.after(2000, self.reset_dropdown)
+        if self.top_level == False:
+            self.after(2000, self.reset_dropdown)

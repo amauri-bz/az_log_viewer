@@ -12,7 +12,7 @@ class PopUpMenu:
 
     def build_edit_menu(self):
         self.menubar = tk.Menu(self.menubar, tearoff=0)
-        self.menubar.add_command(label="Add Pattern", command=self.op_fac.create("pattern_add", self.root, self.tab).execute)
+        self.menubar.add_command(label="Add Pattern", command=self.op_fac.create("pattern", self.root, self.tab).execute)
         self.menubar.add_separator()
         self.menubar.add_command(label="Cut", command=self.op_fac.create("cut", self.root, self.tab).execute)
         self.menubar.add_command(label="Copy", command=self.op_fac.create("copy", self.root, self.tab).execute)
