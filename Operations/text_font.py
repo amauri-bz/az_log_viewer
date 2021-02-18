@@ -47,7 +47,6 @@ class Font(Operation):
         label1.config(font=('helvetica', 10))
         label1.grid(row=2, column=0, padx= 2, pady=2)
 
-        print(db.global_font.split(" ")[1])
         self.font_size = tk.StringVar(value =db.global_font.split(" ")[1])
         sp = tk.Spinbox(self.canvas1, from_= 1, to = 50, command=self.update_font, textvariable = self.font_size)
         sp.grid(row=2, column=1, padx= 2, pady=2)
