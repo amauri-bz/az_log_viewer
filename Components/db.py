@@ -10,6 +10,7 @@ class Database:
         self.actual_pos = '0.0'
         self.actual_find = ''
         self.actual_proj = None
+        self.global_font = None
         self.create_table()
 
     def __exit__(self, exc_type, exc_value, traceback):

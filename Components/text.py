@@ -30,7 +30,12 @@ class TextScrollCombo(tk.Frame):
         scrollb.pack(side="right", fill="y")
         self.text.pack(side="right", fill="both", expand=True)
 
-        self.text.config(font=("consolas", 10), undo=True, wrap='word')
+        db = Database.instance()
+        if db.global_font != None:
+            self.text.config(font=db.global_font, undo=True, wrap='word')
+        else:
+            self.text.config(font=("consolas", 10), undo=True, wrap='word')
+
         self.text.config(borderwidth=3, relief="sunken")
         style = ttk.Style()
         style.theme_use('clam')

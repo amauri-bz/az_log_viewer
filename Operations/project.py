@@ -14,9 +14,9 @@ class ProjectEdit(Operation):
        self.tab = tab
 
     def execute(self):
-        self.add_pattern()
+        self.add_project()
 
-    def add_pattern(self):
+    def add_project(self):
         self.canvas1 = tk.Toplevel(self.root)
         self.canvas1.geometry('200x200')
         self.canvas1.minsize(150, 150)

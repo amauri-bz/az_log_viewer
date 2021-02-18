@@ -43,6 +43,7 @@ class Menu:
         editmenu.add_command(label="Project", command=self.op_fac.create("project", self.root, self.tab).execute)
         editmenu.add_command(label="Pattern", command=self.op_fac.create("pattern", self.root, self.tab).execute)
         editmenu.add_command(label="Auto Sync", command=self.op_fac.create("auto_sync", self.root, self.tab).execute)
+        editmenu.add_command(label="Font", command=self.op_fac.create("font", self.root, self.tab).execute)
         self.menubar.add_cascade(label="Config", menu=editmenu)
 
     def build_help_menu(self):
