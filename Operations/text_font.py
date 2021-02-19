@@ -24,6 +24,9 @@ class Font(Operation):
             return
         db.global_font = tab_text.text["font"]
 
+        tkvar = tk.StringVar(self.root)
+        self.font_size = tk.StringVar(value =db.global_font.split(" ")[1])
+
         self.canvas1 = tk.Toplevel(self.root)
         self.canvas1.geometry('250x150')
         self.canvas1.minsize(200, 100)
@@ -38,8 +41,7 @@ class Font(Operation):
         label1.config(font=('helvetica', 10))
         label1.grid(row=1, column=0, padx= 2, pady=2)
 
-        tkvar = tk.StringVar(self.root)
-        self.popupMenu = FontMenu(self.tab, self.canvas1, tkvar)
+        self.popupMenu = FontMenu(self.tab, self.canvas1, tkvar,self.font_size)
         self.popupMenu.grid(row=1, column=1, padx= 2, pady=2)
         self.popupMenu.configure(width=20)
 
@@ -47,7 +49,6 @@ class Font(Operation):
         label1.config(font=('helvetica', 10))
         label1.grid(row=2, column=0, padx= 2, pady=2)
 
-        self.font_size = tk.StringVar(value =db.global_font.split(" ")[1])
         sp = tk.Spinbox(self.canvas1, from_= 1, to = 50, command=self.update_font, textvariable = self.font_size)
         sp.grid(row=2, column=1, padx= 2, pady=2)
         self.update_font()
@@ -86,16 +87,17 @@ class Font(Operation):
 
     def update_font(self, *args):
         tab_text = self.tab.get_text()
-        new_font = tkFont.Font(size=int(self.font_size.get()))
+        new_font = tkFont.Font(family=self.popupMenu.get_font(), size=int(self.font_size.get()))
         tab_text.text.configure(font=new_font)
 
 
 class FontMenu(ttk.OptionMenu):
 
-    def __init__(self, tab, frame, tkvar):
+    def __init__(self, tab, frame, tkvar, font_size):
         ttk.OptionMenu.__init__(self, frame, tkvar, ())
         self.tab = tab
         self.tkvar = tkvar
+        self.font_size = font_size
         self.tkvar.trace('w', self.change_dropdown)
         self.new_font = None
         self.reset_dropdown()
@@ -108,7 +110,7 @@ class FontMenu(ttk.OptionMenu):
         tab_text = self.tab.get_text()
         if tab_text == None: return
         self.new_font = self.tkvar.get()
-        fontExample = tkFont.Font(family=self.new_font)
+        fontExample = tkFont.Font(family=self.new_font, size=int(self.font_size.get()))
         tab_text.text.configure(font=fontExample)
 
     def reset_dropdown(self):

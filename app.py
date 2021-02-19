@@ -17,6 +17,7 @@ class App:
         self.menu = Menu(self.root, self.tab)
         self.status = StatusBar(self.root)
         self.status.set("ready")
+        self.tab.add_tab()
 
 def confirmExit():
     if messagebox.askokcancel('Quit', 'Are you sure you want to exit?'):
@@ -30,6 +31,7 @@ if __name__ == '__main__':
     root.minsize(400, 200)
     root.protocol('WM_DELETE_WINDOW', confirmExit)
     root.config(bg='#e6e6e6')
+    root.iconphoto(False, tk.PhotoImage(file='images/icon.png'))
 
     App(root)
 
