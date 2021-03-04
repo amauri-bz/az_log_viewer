@@ -34,4 +34,4 @@ class PatternMenu(ttk.OptionMenu):
                                   self.tkvar.set(value))
         self.tkvar.set(db.instance().actual_proj)
         if self.top_level == False:
-            self.after(2000, self.reset_dropdown)
+            self.after(3000, self.reset_dropdown)
