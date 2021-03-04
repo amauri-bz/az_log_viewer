@@ -9,6 +9,7 @@ from Components.menu import Menu
 from Components.status_bar import StatusBar
 
 class App:
+    '''The application class initialize all basic components'''
     def __init__(self, root):
         self.root = root
         self.op_fac = OperationFactory()
@@ -20,6 +21,7 @@ class App:
         self.tab.add_tab()
 
 def confirmExit():
+    '''Exit button verification'''
     if messagebox.askokcancel('Quit', 'Are you sure you want to exit?'):
         root.destroy()
 
