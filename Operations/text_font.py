@@ -22,7 +22,7 @@ class Font(Operation):
         if tab_text == None:
             StatusBar().set("aborted - aba not found")
             return
-        db.global_font = tab_text.text["font"]
+        db.global_font = tab_text.text["font"] + tab_text.text["font"]
 
         tkvar = tk.StringVar(self.root)
         self.font_size = tk.StringVar(value =db.global_font.split(" ")[1])
@@ -56,7 +56,7 @@ class Font(Operation):
         button_cancel = tk.Button(self.canvas1, text='Cancel', command=self.cancel, font=('helvetica', 9, 'bold'))
         button_cancel.grid(row=3, column=0, padx= 10, pady=2)
 
-        button_add = tk.Button(self.canvas1, text='Add', command=self.apply_font, font=('helvetica', 9, 'bold'))
+        button_add = tk.Button(self.canvas1, text='Apply', command=self.apply_font, font=('helvetica', 9, 'bold'))
         button_add.grid(row=3, column=1, padx= 10, pady=2)
 
         self.canvas1.grab_set()
@@ -76,7 +76,7 @@ class Font(Operation):
     def apply_font(self):
         tab_text = self.tab.get_text()
         if tab_text != None:
-            new_font = tkFont.Font(family=self.popupMenu.get_font(), size=int(self.font_size.get()))
+            new_font = self.popupMenu.get_font() + " " + self.font_size.get()
             tab_text.text.configure(font=new_font)
 
             db = Database.instance()
@@ -87,7 +87,7 @@ class Font(Operation):
 
     def update_font(self, *args):
         tab_text = self.tab.get_text()
-        new_font = tkFont.Font(family=self.popupMenu.get_font(), size=int(self.font_size.get()))
+        new_font = self.popupMenu.get_font() + " " + self.font_size.get()
         tab_text.text.configure(font=new_font)
 
 
@@ -110,8 +110,8 @@ class FontMenu(ttk.OptionMenu):
         tab_text = self.tab.get_text()
         if tab_text == None: return
         self.new_font = self.tkvar.get()
-        fontExample = tkFont.Font(family=self.new_font, size=int(self.font_size.get()))
-        tab_text.text.configure(font=fontExample)
+        font = self.new_font + " " + self.font_size.get()
+        tab_text.text.configure(font=font)
 
     def reset_dropdown(self):
         db = Database.instance()
