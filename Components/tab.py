@@ -86,8 +86,10 @@ class TabCtrl(object):
         self.nb.select(tab)
 
     def refresh_tabs(self):
-        for i in range(0, self.nb.index('end')):
-            self.nb.tabs[i].highlight(None)
+        if len(self.nb.children.items())<= 0:
+            return None
+        for item in self.nb.children.items():
+            item[1].winfo_children()[0].highlight(None)
 
     def get_text(self):
         if len(self.nb.children.items())<= 0:
