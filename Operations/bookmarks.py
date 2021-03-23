@@ -15,34 +15,38 @@ class BookMarks(Operation):
         tab_text = self.tab.get_text().text
         if tab_text == None: return
         index = tab_text.index(tk.INSERT)
-        tab_text.mark_set("bmark-"+index.split('.')[0], index)
+
+        line_idx = index.split(".")[0]
+        tab_text.tag_add("bmark-"+index.split('.')[0], "%s.0"%line_idx, "%s.end"%line_idx)
+        tab_text.tag_config("bmark-"+index.split('.')[0], foreground='blue')
 
     def remove_bookmark(self):
         tab_text = self.tab.get_text().text
         if tab_text == None: return
         index = tab_text.index(tk.INSERT)
-        tab_text.mark_unset("bmark-"+index.split('.')[0])
+        line_idx = index.split(".")[0]
+        tab_text.tag_remove("bmark-"+index.split('.')[0], "%s.0"%line_idx, "%s.end"%line_idx)
 
     def remove_all_bookmark(self):
         tab_text = self.tab.get_text().text
         if tab_text == None: return
 
-        for mark in tab_text.mark_names():
-            if mark.find("bmark") != -1:
-                tab_text.mark_unset(mark)
+        for tag in tab_text.tag_names():
+            if tag.find("bmark") != -1:
+                tab_text.tag_remove(tag, '1.0', 'end')
 
     def next_bookmark(self):
         tab_text = self.tab.get_text().text
         if tab_text == None: return
         actual_index = tab_text.index(tk.INSERT)
 
-        mark_list = []
-        for mark in tab_text.mark_names():  
-            if mark.find("bmark") != -1:
-                mark_list.append(int(mark.split('-')[1]))
-        mark_list.sort()
+        tag_list = []
+        for tag in tab_text.tag_names():
+            if tag.find("bmark") != -1:
+                tag_list.append(int(tag.split('-')[1]))
+        tag_list.sort()
 
-        for line in mark_list:
+        for line in tag_list:
             if line >= int(actual_index.split('.')[0]):
                 tab_text.see("%d.0"%(line))
                 break
@@ -52,13 +56,13 @@ class BookMarks(Operation):
         if tab_text == None: return
         actual_index = tab_text.index(tk.INSERT)
 
-        mark_list = []
-        for mark in tab_text.mark_names():
-            if mark.find("bmark") != -1:
-                mark_list.append(int(mark.split('-')[1]))
-        mark_list.sort(reverse=True)
+        tag_list = []
+        for tag in tab_text.tag_names():
+            if tag.find("bmark") != -1:
+                tag_list.append(int(tag.split('-')[1]))
+        tag_list.sort(reverse=True)
 
-        for line in mark_list:
+        for line in tag_list:
             if line <= int(actual_index.split('.')[0]):
                 tab_text.see("%d.0"%(line))
                 break

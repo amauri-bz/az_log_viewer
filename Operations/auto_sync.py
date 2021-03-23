@@ -123,8 +123,9 @@ class AutoSync(Operation):
                 user = self.entry_user.get()
                 passwor = self.entry_pass.get()
                 path =self.entry_path.get()
-                tab_text.text_sync.syn_ext_enable(server, 22, user, passwor, path, interv)
-                StatusBar().set("external sync enabled")
+                ret = tab_text.text_sync.syn_ext_enable(server, 22, user, passwor, path, interv)
+                if ret == True:
+                    StatusBar().set("external sync enabled")
         self.close_window()
 
     def syn_disable(self):

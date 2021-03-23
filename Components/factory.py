@@ -16,6 +16,7 @@ from Operations.redo import Redo
 from Operations.find import Find
 from Operations.text_font import Font
 from Operations.auto_sync import AutoSync
+from Operations.sync_ctrl import SyncCtrl
 from Operations.bookmarks import BookMarks
 from Operations.go_to_line import GoToLine
 
@@ -61,5 +62,13 @@ class OperationFactory:
             return AutoSync(root, tab)
         elif name == 'font':
             return Font(root, tab)
+        elif name == 'sync_pause':
+            return SyncCtrl(root, tab)
+        elif name == 'sync_continue':
+            return SyncCtrl(root, tab)
+        elif name == 'sync_disable':
+            return SyncCtrl(root, tab)
+        elif name == 'reset_ext_buffer':
+            return SyncCtrl(root, tab)
         else:
             return Help(root, tab)

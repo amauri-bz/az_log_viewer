@@ -14,23 +14,29 @@ if paramiko_found != None and scp_found != None:
 			pass
 
 		def __exit__(self, exc_type, exc_value, traceback):
+			self.end_connection()
+
+		def end_connection(self):
 			self.ssh.close()
 			self.scp_conn.close()
-			os.remove("buffer.txt")
+			os.remove(self.buffer_file)
 
-		def connect(self, server, port, user, password):
+		def connect(self, tab_id, server, port, user, password):
 			try:
+				self.buffer_file = "buffer"+tab_id+".txt"
 				self.ssh = self.createSSHClient(server, port, user, password)
 				self.scp_conn = SCPClient(self.ssh.get_transport())
-				f= open("buffer.txt","w+")
+				f= open(self.buffer_file,"w+")
 				f.close()
+				return True
 			except:
 				StatusBar().set("aborted - external connection error")
+				return False
 
 		def createSSHClient(self, server, port, user, password):
 		    client = paramiko.SSHClient()
 		    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-		    client.connect(server, username=user, password=password)
+		    client.connect(server, username=user, password=password, timeout=5)
 		    return client
 
 		def get_text(self, path):
@@ -39,14 +45,17 @@ if paramiko_found != None and scp_found != None:
 			    - path: Source file in the remote server.
 			"""
 			try:
-				self.scp_conn.get(path, "buffer.txt")
-				f = open("buffer.txt", 'r')
+				self.scp_conn.get(path, self.buffer_file)
+				f = open(self.buffer_file, 'r')
 				f2 = f.read()
 				f.close()
 				return f2
 			except:
-				StatusBar().set("aborted - path error: %s" %(path))
-				return "path error: %s" %(path)
+				StatusBar().set("aborted - invalid path: %s" %(path))
+				return "invalid path: %s" %(path)
+		
+		def reset_ext_buffer(self, path):
+			self.ssh.exec_command('echo "" > ' + path)
 else:
 	class ScpConnect:
 

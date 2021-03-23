@@ -45,7 +45,7 @@ class TextScrollCombo(tk.Frame):
         self.saved_path = ""
 
         self.popup_menu = PopUpMenu(self.root, self.tab)
-        self.text_sync = TextSync(self.tab)
+        self.text_sync = TextSync(self.tab, self, self.text)
 
     def bind_text_event(self):
         self.text.bind("<<Highlight>>", self.highlight)
